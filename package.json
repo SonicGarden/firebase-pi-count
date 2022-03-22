@@ -1,0 +1,15 @@
+{
+  "name": "firebase-pi-count",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "ssh://git@github.com/SonicGarden/firebase-pi-count.git",
+  "author": "t-kojima <t-kojima@sonicgarden.jp>",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "typescript": "^4.6.2"
+  }
+}
