@@ -7,24 +7,22 @@ const KINTONE_APP_ID = 1514;
 type Data = {
   kintoneApiToken: string;
   name: string;
+  type: 'standard' | 'light' | 'owned';
+  platform?: 'aws' | 'heroku' | 'firebase';
   count: number;
+  isImportantPrivateInfo?: boolean;
   paymentSystemName?: string;
+};
+
+type Params = {
   region?: string;
   schedule?: string;
   timeZone?: string;
-  projectId?: string;
 };
 
-export const piCount = (data: Data): functions.CloudFunction<unknown> => {
-  const {
-    kintoneApiToken,
-    name,
-    count,
-    paymentSystemName,
-    region = 'asia-northeast1',
-    schedule = '0 0 * * *',
-    timeZone = 'Asia/Tokyo',
-  } = data;
+export const piCount = ({ data, params }: { data: Data; params: Params }): functions.CloudFunction<unknown> => {
+  const { kintoneApiToken, name, type, platform = 'firebase', count, isImportantPrivateInfo = false, paymentSystemName = '' } = data;
+  const { region = 'asia-northeast1', schedule = '0 0 * * *', timeZone = 'Asia/Tokyo' } = params;
   return functions
     .region(region)
     .pubsub.schedule(schedule)
@@ -36,12 +34,12 @@ export const piCount = (data: Data): functions.CloudFunction<unknown> => {
           {
             app: KINTONE_APP_ID,
             record: {
-              type: { value: 'standard' },
-              platform: { value: 'firebase' },
+              type: { value: type },
+              platform: { value: platform },
               name: { value: name },
               count: { value: count },
-              is_important_private_info: { value: 'true' },
-              payment_system_name: { value: paymentSystemName || '' },
+              is_important_private_info: { value: isImportantPrivateInfo ? 'true' : 'false' },
+              payment_system_name: { value: paymentSystemName },
             },
           },
           {
