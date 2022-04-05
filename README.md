@@ -46,10 +46,18 @@ export piCount = firebasePiCount.piCount({
 | schedule               | optional | 0 0 * * *       |                             |
 | timeZone               | optional | Asia/Tokyo      |                             |
 
-## npm update
+## npm publish
 
 ```sh
 git tag -a v1.0.0 -m "My first version v1.0.0"
 git push origin tags/v1.0.0
+npm publish --access=public
+```
+
+### update
+
+```sh
+npm version patch # or minor or magor
+git push origin tags/v1.0.1
 npm publish --access=public
 ```
