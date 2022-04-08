@@ -22,7 +22,7 @@ type Params = {
 };
 
 export const piCount = (params: Params): functions.CloudFunction<unknown> => {
-  const { region = 'asia-northeast1', schedule = '0 0 * * *', timeZone = 'Asia/Tokyo', kintoneApiToken, data: func } = params;
+  const { region = 'asia-northeast1', schedule = '0 0 1 * *', timeZone = 'Asia/Tokyo', kintoneApiToken, data: func } = params;
   return functions
     .region(region)
     .pubsub.schedule(schedule)

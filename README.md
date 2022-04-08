@@ -19,7 +19,7 @@ const token = // トークンは別途確認
 
 export piCount = firebasePiCount.piCount({
   region: 'asia-northeast1',
-  schedule: '0 0 * * *',
+  schedule: '0 0 1 * *',
   timeZone: 'Asia/Tokyo',
   kintoneApiToken: token,
   data: async () => {
@@ -43,7 +43,7 @@ export piCount = firebasePiCount.piCount({
 | kintoneApiToken        | yes      |                 | kintone api access token    |
 | data                   | yes      |                 | functions that return data  |
 | region                 | optional | asia-northeast1 |                             |
-| schedule               | optional | 0 0 * * *       |                             |
+| schedule               | optional | 0 0 1 * *       |                             |
 | timeZone               | optional | Asia/Tokyo      |                             |
 
 ## npm publish
