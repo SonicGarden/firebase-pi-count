@@ -13,16 +13,19 @@ type Data = {
   paymentSystemName?: string;
 };
 
-type Params = {
+export const piCount = ({
+  region = 'asia-northeast1',
+  schedule = '0 0 1 * *',
+  timeZone = 'Asia/Tokyo',
+  kintoneApiToken,
+  data: func,
+}: {
   region?: string;
   schedule?: string;
   timeZone?: string;
   kintoneApiToken: string;
   data: () => Promise<Data>;
-};
-
-export const piCount = (params: Params): functions.CloudFunction<unknown> => {
-  const { region = 'asia-northeast1', schedule = '0 0 1 * *', timeZone = 'Asia/Tokyo', kintoneApiToken, data: func } = params;
+}): functions.CloudFunction<unknown> => {
   return functions
     .region(region)
     .pubsub.schedule(schedule)
