@@ -4,6 +4,8 @@ Privacy Information for Firebase Cloud Functions
 
 ## Installation
 
+firebase-admin@11.2.0より低いバージョンは2.0.0より低いバージョンを利用してください。
+
 ```sh
 npm install --save @sonicgarden/firebase-pi-count
 // or
