@@ -14,7 +14,7 @@ yarn add @sonicgarden/firebase-pi-count
 
 ```js
 import { defineSecret } from 'firebase-functions/params';
-import { piCount } from '@sonicgarden/firebase-pi-count';
+import { piCount as _piCount } from '@sonicgarden/firebase-pi-count';
 
 export piCount = functions
   .runWith({ secrets: ['KINTONE_API_TOKEN'] })
@@ -25,16 +25,16 @@ export piCount = functions
     const count = await fetch('.....');
     // トークンはシークレットマネージャーで管理
     const token = defineSecret('KINTONE_API_TOKEN').value();
-    await piCount({
+    await _piCount({
       kintoneApiToken: token,
-      data: {
+      data: async () => ({
         name: 'your project name',
         count,
         platform: 'firebase',
         isImportantPrivateInfo: true,
         paymentSystemName: 'stripe',
-      }
-    })
+      }),
+    });
   });
 ```
 
