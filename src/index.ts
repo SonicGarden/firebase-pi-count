@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const KINTONE_URL = 'https://sonicgarden.cybozu.com/k/v1/record.json';
 const KINTONE_APP_ID = 1514;
 
@@ -20,9 +18,13 @@ export const piCount = async ({
   data: () => Promise<Data>;
 }) => {
   const data = await func();
-  return axios.post(
-    KINTONE_URL,
-    {
+  const response = await fetch(KINTONE_URL, {
+    method: 'POST',
+    headers: {
+      'X-Cybozu-API-Token': kintoneApiToken,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
       app: KINTONE_APP_ID,
       record: {
         type: { value: data.type },
@@ -32,12 +34,12 @@ export const piCount = async ({
         is_important_private_info: { value: data.isImportantPrivateInfo ? 'true' : 'false' },
         payment_system_name: { value: data.paymentSystemName },
       },
-    },
-    {
-      headers: {
-        'X-Cybozu-API-Token': kintoneApiToken,
-        'Content-Type': 'application/json',
-      },
-    }
-  );
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`kintone API request failed: ${response.status} ${await response.text()}`);
+  }
+
+  return (await response.json()) as { id: string; revision: string };
 };
